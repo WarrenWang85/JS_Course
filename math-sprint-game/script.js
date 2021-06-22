@@ -70,7 +70,6 @@ function updateBestScore(){
   bestScoreArray.forEach((score, index) => {
     // Select correct Best Score to update
     if(questionAmount == score.questions){
-      console.log("");
       // Return Best Score as Number with one decimal
       const savedBestScore = Number(bestScoreArray[index].bestScore)
       if(savedBestScore === 0 || savedBestScore > finalTime){
@@ -131,16 +130,19 @@ function checkTime(){
       }
     });
     finalTime = timePlayed + penaltyTime;
-    console.log(finalTime);
+    // console.log('timeplayed',timePlayed, 'penaltyTime',penaltyTime,'finalTime',finalTime);
+    // console.log(finalTime);
     scoresToDOM();
   }
   
 }
 // Start timer when game page is clicked
 function startTimer() {
-  timeplayed = 0;
+  
+  timePlayed = 0;
   penaltyTime = 0;
   finalTime = 0;
+  
   timer = setInterval(() => {
     timePlayed +=0.1;
     checkTime();
@@ -237,17 +239,31 @@ function populateGamePage() {
 // Navigate from Splash Page to Countdown Page
 
 function countdownStart(){
-  countdown.textContent = '3';
-  setTimeout(() => {countdown.textContent = '2'},1000);
-  setTimeout(() => {countdown.textContent = '1'},2000);
-  setTimeout(() => {countdown.textContent = 'GO'},3000);
+  let count = 3;
+  countdown.textContent = count;
+  var countdownTimer = setInterval(() =>{
+    count--;
+    if(count === -1){
+      showGamePage();
+      clearInterval(countdownTimer);
+    } else if(count === 0){
+      countdown.textContent = 'go';
+    } else {
+      countdown.textContent = count;
+    }
+    
+  },1000)
+  // countdown.textContent = '3';
+  // setTimeout(() => {countdown.textContent = '2'},1000);
+  // setTimeout(() => {countdown.textContent = '1'},2000);
+  // setTimeout(() => {countdown.textContent = 'GO'},3000);
 }
 function showCountDown() {
   countdownPage.hidden = false;
   splashPage.hidden = true;
   countdownStart();
   populateGamePage();
-  setTimeout(showGamePage,4000);
+  // setTimeout(showGamePage,4000);
 }
 
 // Get the value from selected radio button
