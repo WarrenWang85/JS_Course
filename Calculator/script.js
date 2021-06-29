@@ -58,7 +58,6 @@ function useOperator(operator){
 }
 
 
-
 // Reset all values, display
 function resetAll() {
     calculatorDisplay.textContent = '0';
